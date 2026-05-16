@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/allover.css">
+<body>
+  
+    <div class="container page active" id="loginPage" style="max-width: 650px">
+        <div class="header">
+            <h1 style="color: black;">Register Company</h1>
+            <p style="color: black;">Create your company account</p>
+        </div>
+        <div class="form-container">
+<div style="background-color: rgba(255, 0, 0, 0.174); padding-left: 5px;">
+            <ul id="message" class="pass" style="color: red; list-style-position: inside;"> <% if(errors){  errors.forEach(err => { %>
+<li> <%= err  %> </li>
+  
+<%});  }    %></ul> </div>
+
+            <p>company details </p><br>
+            <form id="loginForm" action="/auth/signup" method="post">
+                <div class="form-group">
+                    <label style="text-align: center;" for="companyDomain">Company name</label>
+                    <input type="text" id="companyDomain" placeholder="Enter company name"  name="companyname" value="<%= oldinput.companyname  %>">
+                </div>
+                <div class="form-group">
+                    <label style="text-align: center;" for="registerEmail">company mail</label>
+                    <input type="email" id="email"  placeholder="Enter company email"  name="companyemail" value="<%= oldinput.companyemail  %>">
+                </div>
+                <div class="text">
+                    <label style="text-align: center;" for="username">company contact number </label>
+                    <input type="text" id="username" placeholder="Enter company contact number" name="companynumber" value="<%= oldinput.companynumber  %>" >
+                </div>
+                <div class="text">
+                    <label style="text-align: center;" for="username">company address</label>
+                    <input type="text" id="username" placeholder="Enter company contact number" name="companyaddress" value="<%= oldinput.companyaddress  %>">
+                </div>
+<br><br><br>
+                <P> personal Details</P><br>
+                <div class="form-group">
+                    <label style="text-align: center;" for="username">username</label>
+                    <input type="text" id="username" placeholder="Enter username" name="username" value="<%= oldinput.username  %>">
+                </div>
+                <div class="form-group">
+                    <label style="text-align: center;" for="registerEmail">Email Address</label>
+                    <input type="email" id="email"  placeholder="Enter your email" name="useremail" value="<%= oldinput.useremail  %>">
+                </div>
+                <div class="form-group">
+                    <label style="text-align: center;" for="registerEmail">mobile number</label>
+                    <input type="text" id="email"  placeholder="Enter your mobile number" name="mobilenumber" value="<%= oldinput.mobilenumber  %>">
+                </div>
+                <div class="form-group">
+                    <label style="text-align: center;" for="registerPassword">New Password</label>
+                    <input type="password" id="password" placeholder="Create a strong password" name="password"  required />
+                  </div>
+                  <div class="form-group">
+                    <label style="text-align: center;" for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" placeholder="Re-enter your password" name="confirmpassword" required />
+                  </div>
+                 
+                  
+            
+
+                <button type="submit"   class="Signin">register</button>
+
+              
+            </form>
+            <div class="divider">
+                <span>OR</span>
+            </div>
+            <div class="register-link">
+                <a href="/auth/login" id="registration">..login</a>
+            </div>
+           
+           
+        </div>
+    </div>
+   
+</body>
+</html>

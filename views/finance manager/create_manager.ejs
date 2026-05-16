@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Employee</title>
+    <link rel="stylesheet" href="/css/finance_manager.css">
+</head>
+
+<body>
+
+<%- include('../partials/finance_manager_nav') %>
+
+<form action="/finance-manager/create_manager" method="POST">
+
+<div class="form-page">
+
+    <div class="form-card">
+
+        <!-- HEADER -->
+
+        <div class="form-card-header">
+            <h2>Create New Manager</h2>
+            <p>Add Manager details</p>
+        </div>
+
+        <div class="form-body">
+
+            <!-- SUCCESS TOAST -->
+
+            <div class="toast" id="successToast">
+                ✅ Manager created successfully!
+            </div>
+
+            <div class="form-grid">
+
+                <!-- FULL NAME -->
+
+                <div class="form-group">
+                    <label>Full Name</label>
+
+                    <input 
+                        type="text"
+                        name="name"
+                        placeholder="e.g. Ravi Shah"
+                        required
+                    >
+                </div>
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+                    <label>Email Address</label>
+
+                    <input 
+                        type="email"
+                        name="email"
+                        placeholder="e.g. ravi@gmail.com"
+                        required
+                    >
+                </div>
+
+                <!-- PHONE -->
+
+                <div class="form-group">
+                    <label>Phone Number</label>
+
+                    <input 
+                        type="tel"
+                        name="phone"
+                        placeholder="e.g. 9876543210"
+                    >
+                </div>
+
+
+      
+
+
+            <!-- BUTTONS -->
+
+            <div class="submit-row">
+
+                <button type="reset" class="btn-reset">
+                    Clear
+                </button>
+
+                <button type="submit" class="btn-submit">
+                    Create manager
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</form>
+
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Employee Request Details</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<link rel="stylesheet" href="/css/manager.css">
+
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 30px auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  h2, h3 {
+    margin: 10px 0;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 8px 0;
+    font-size: 16px;
+  }
+
+  .details {
+    margin-top: 20px;
+    line-height: 1.6;
+  }
+
+  .details p span {
+    font-weight: bold;
+  }
+  .btn-accept {
+    flex: 1;
+    padding: 14px;
+    background: linear-gradient(135deg, #84f096 0%, #30e34e 80%);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-accept:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(48, 227, 125, 0.3);
+}
+  .btn-reject {
+    flex: 1;
+    padding: 14px;
+    background: linear-gradient(135deg, #f08484 0%, #e33030 80%);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-reject:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(227, 48, 48, 0.3);
+}
+  .btn-back {
+    flex: 1;
+    padding: 14px;
+   
+    background: linear-gradient(135deg, #84c5f0 0%, #30b9e3 80%);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    top: 50px;
+    left: 20px;
+
+}
+
+.btn-back:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(48, 173, 227, 0.3);
+}
+</style>
+</head>
+
+<body>
+<%- include('../partials/finance_manager_nav') %>
+
+<a href="/finance_manager/manager_requests"  class="btn-back"> < back</a>
+<div class="container">
+  <h2>Employee Request Details</h2>
+  <div class="details">
+    <h2>Name: <span><%= expense.manager.name %></span></h2>
+    <h2>Email: <span><%= expense.manager.email %></span></h2>
+    <h3>Title: <span><%= expense.title %></span></h3>
+    <p>Amount: <span><%= expense.amount %></span></p>
+    <p>status: <span><%= expense.status %></span></p>
+    <p>Date: <span><%= new Date(expense.date).toLocaleDateString('en-IN', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
+    }) %></span></p>
+    <p>Category: <span><%= expense.category %></span></p>
+    <p>Payment Method: <span><%= expense.paymentMethod %></span></p>
+    <p>Vendor: <span><%= expense.vendor %></span></p>
+    <p>Description: <span><%= expense.description %></span></p>
+    <button class="btn-accept" onclick="changestatus('approved')" >approve</button>
+    <button class="btn-reject" onclick="changestatus('rejected')">reject</button>
+  </div>
+</div>
+<script>
+  function changestatus(status) {
+
+    const expenseId = "<%= expense._id %>";  // get current expense ID
+  
+    fetch(`/finance-manager/update-status/${expenseId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ status })
+    })
+    .then(res => res.json())
+    .then(data => {
+      alert("Status updated successfully");
+  
+      // reload page to reflect changes
+      window.location.reload();
+    })
+    .catch(err => {
+      console.log("Error:", err);
+    });
+  }
+  </script>
+</body>
+</html>

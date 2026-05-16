@@ -1,0 +1,59 @@
+<!-- views/employee/dashboard.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>manager Dashboard</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+
+<link rel="stylesheet" href="/css/manager.css">
+<style>
+      .btn-delete {
+    flex: 1;
+    padding: 14px;
+    background: linear-gradient(135deg, #f08484 0%, #e33030 80%);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-delete:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(227, 48, 48, 0.3);
+}
+</style>
+
+</head>
+
+<body>
+
+    <%- include('../partials/CFO_nav') %>
+
+<div class="dashboard">
+    <div class="page-title"> Employee list</div>
+
+    <!-- History -->
+    <table>
+        <thead>
+            <tr>
+                <th>finance-manager name</th>
+                <th>no.of manager</th>
+                <th>no. of employe</th>
+                <th>total expenses</th>
+                <th> delete </th>
+            </tr>
+        </thead>
+        <tbody id="fmlist"></tbody>
+    </table>
+</div>
+<script>
+const finance_manager_map = <%- JSON.stringify(finance_manager_map) %>;
+</script>
+<script src="/js/finance_manager_list.js"></script>
+<script src="/js/first_general.js"></script>
+</body>
+</html>

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Team Analytics Dashboard</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<link rel="stylesheet" href="/css/manager.css">
+
+<style>
+
+/* ───────── PAGE HEADER ───────── */
+
+.analytics-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:28px;
+}
+
+.analytics-title h1{
+    font-size:28px;
+    color:#1a3a47;
+    margin-bottom:6px;
+}
+
+.analytics-title p{
+    color:#6b8fa0;
+    font-size:14px;
+}
+
+/* ───────── FILTER BAR ───────── */
+
+.filter-bar{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.filter-btn{
+    padding:10px 18px;
+    border:none;
+    border-radius:10px;
+    background:#fff;
+    color:#30b9e3;
+    font-weight:700;
+    cursor:pointer;
+    transition:0.2s;
+    box-shadow:0 2px 8px rgba(48,185,227,0.08);
+}
+
+.filter-btn:hover{
+    transform:translateY(-2px);
+}
+
+.filter-btn.active{
+    background:linear-gradient(135deg, #84d0f0 0%, #30b9e3 80%);
+    color:#fff;
+}
+
+/* ───────── STAT CARDS ───────── */
+
+.analytics-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:18px;
+    margin-bottom:30px;
+}
+
+.analytics-card{
+    background:#fff;
+    border-radius:18px;
+    padding:24px;
+    box-shadow:0 2px 12px rgba(48,185,227,0.08);
+    position:relative;
+    overflow:hidden;
+}
+
+.analytics-card::before{
+    content:'';
+    position:absolute;
+    top:0;
+    left:0;
+    width:5px;
+    height:100%;
+    background:#30b9e3;
+}
+
+.analytics-card.green::before{
+    background:#27ae60;
+}
+
+.analytics-card.orange::before{
+    background:#f39c12;
+}
+
+.analytics-card.red::before{
+    background:#e74c3c;
+}
+
+.analytics-label{
+    font-size:13px;
+    text-transform:uppercase;
+    font-weight:700;
+    color:#6b8fa0;
+    margin-bottom:10px;
+}
+
+.analytics-value{
+    font-size:32px;
+    font-weight:800;
+    color:#1a3a47;
+}
+
+.analytics-sub{
+    margin-top:8px;
+    color:#8aa4b0;
+    font-size:13px;
+}
+
+/* ───────── CHART SECTION ───────── */
+
+.analytics-charts{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:22px;
+    margin-bottom:28px;
+}
+
+@media(max-width:900px){
+    .analytics-charts{
+        grid-template-columns:1fr;
+    }
+}
+
+.chart-box{
+    background:#fff;
+    border-radius:18px;
+    padding:24px;
+    box-shadow:0 2px 12px rgba(48,185,227,0.08);
+}
+
+.chart-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.chart-header h3{
+    font-size:17px;
+    color:#1a3a47;
+}
+
+.chart-header span{
+    font-size:13px;
+    color:#6b8fa0;
+}
+
+.chart-container{
+    height:320px;
+}
+
+/* ───────── EMPLOYEE TABLE ───────── */
+
+.employee-card{
+    background:#fff;
+    border-radius:18px;
+    padding:24px;
+    box-shadow:0 2px 12px rgba(48,185,227,0.08);
+}
+
+.employee-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.employee-top h3{
+    color:#1a3a47;
+}
+
+.rank-badge{
+    background:#e8f7fd;
+    color:#30b9e3;
+    padding:6px 14px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:700;
+}
+
+.employee-table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.employee-table th{
+    background:#f7fbfd;
+    padding:14px;
+    text-align:left;
+    color:#6b8fa0;
+    font-size:12px;
+    text-transform:uppercase;
+}
+
+.employee-table td{
+    padding:16px 14px;
+    border-bottom:1px solid #eef5f8;
+    font-size:14px;
+}
+
+.employee-table tr:hover{
+    background:#f9fdff;
+}
+
+.emp-info{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.emp-avatar{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:#30b9e3;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+}
+
+.amount{
+    font-weight:700;
+    color:#1a3a47;
+}
+
+.progress-bar{
+    width:120px;
+    height:8px;
+    background:#e8f3f8;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress-fill{
+    height:100%;
+    background:linear-gradient(135deg, #84d0f0 0%, #30b9e3 80%);
+}
+
+</style>
+</head>
+
+<body>
+
+<%- include('../partials/finance_manager_nav') %>
+
+<div class="dashboard">
+
+    <!-- HEADER -->
+
+    <div class="analytics-header">
+
+        <div class="analytics-title">
+            <h1>Team Analytics Dashboard</h1>
+            <p>Track team expenses, approvals and spending patterns</p>
+        </div>
+
+
+    </div>
+
+    <!-- STAT CARDS -->
+    <div class="analytics-grid">
+
+        <div class="analytics-card">
+            <div class="analytics-label">Total Expense</div>
+            <div class="analytics-value" id="total"></div>
+            <div class="analytics-sub">Combined team spending</div>
+        </div>
+    
+        <div class="analytics-card green">
+            <div class="analytics-label">Approved Expense</div>
+            <div class="analytics-value" id="approvedamount"></div>
+            <div class="analytics-sub">Successfully approved expenses</div>
+        </div>
+    
+        <div class="analytics-card orange">
+            <div class="analytics-label">Pending Expense</div>
+            <div class="analytics-value" id="pendigamount"></div>
+            <div class="analytics-sub">Waiting for approval</div>
+        </div>
+    
+        <div class="analytics-card red">
+            <div class="analytics-label">Rejected Expense</div>
+            <div class="analytics-value" id="rejectedamount"></div>
+            <div class="analytics-sub">Declined requests</div>
+        </div>
+    
+    </div>
+
+    <!-- CHARTS -->
+
+    <div class="analytics-charts">
+
+      <!-- BIG MONTHLY BAR CHART -->
+
+<div class="chart-box" style="margin-bottom:25px;">
+
+    <div class="chart-header">
+        <h3>Monthly Expense Trend</h3>
+        <span>Jan - Dec 2026</span>
+    </div>
+
+    <div class="chart-container">
+        <canvas id="barChart"></canvas>
+    </div>
+
+</div>
+
+<!-- TWO SMALL CHARTS -->
+
+<div class="analytics-charts">
+
+    <!-- CATEGORY CHART -->
+
+    <div class="chart-box">
+
+        <div class="chart-header">
+            <h3>Expense Categories</h3>
+            <span>Category Distribution</span>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="doughnutChart"></canvas>
+        </div>
+
+    </div>
+
+    <!-- STATUS PIE CHART -->
+
+    <div class="chart-box">
+
+        <div class="chart-header">
+            <h3>Expense Status</h3>
+            <span>Approval Distribution</span>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="statusChart"></canvas>
+        </div>
+
+    </div>
+
+</div>
+
+    <!-- EMPLOYEE TABLE -->
+
+   
+</div>
+<div class="employee-card">
+
+    <div class="employee-top">
+        <h3>Employee Expense Summary</h3>
+        <div class="rank-badge">Team Overview</div>
+    </div>
+
+    <table class="employee-table">
+
+        <thead>
+            <tr>
+                <th>Employee Name</th>
+                <th>employe's manager</th>
+                <th>Total  approved Expense</th>
+                <th>Total approved Requests</th>
+            </tr>
+        </thead>
+
+        <tbody id="employeeTableBody">
+
+        </tbody>
+
+    </table>
+
+</div>
+<script> const expenses = <%- JSON.stringify(expenses) %>;</script>
+<script src="/js/employe_aggregate _in_FM.js"></script>
+</body>
+</html>

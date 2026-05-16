@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Employee</title>
+    <link rel="stylesheet" href="/css/manager.css">
+</head>
+
+<body>
+
+<%- include('../partials/manager_nav') %>
+
+<form action="/manager/employe_creation" method="POST">
+
+<div class="form-page">
+
+    <div class="form-card">
+
+        <!-- HEADER -->
+
+        <div class="form-card-header">
+            <h2>Create New Employee</h2>
+            <p>Add employee details and assign reporting manager</p>
+        </div>
+
+        <div class="form-body">
+
+            <!-- SUCCESS TOAST -->
+
+            <div class="toast" id="successToast">
+                ✅ Employee created successfully!
+            </div>
+
+            <div class="form-grid">
+
+                <!-- FULL NAME -->
+
+                <div class="form-group">
+                    <label>Full Name</label>
+
+                    <input 
+                        type="text"
+                        name="name"
+                        placeholder="e.g. Ravi Shah"
+                        required
+                    >
+                </div>
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+                    <label>Email Address</label>
+
+                    <input 
+                        type="email"
+                        name="email"
+                        placeholder="e.g. ravi@gmail.com"
+                        required
+                    >
+                </div>
+
+                <!-- PHONE -->
+
+                <div class="form-group">
+                    <label>Phone Number</label>
+
+                    <input 
+                        type="tel"
+                        name="phone"
+                        placeholder="e.g. 9876543210"
+                    >
+                </div>
+
+
+      
+
+
+            <!-- BUTTONS -->
+
+            <div class="submit-row">
+
+                <button type="reset" class="btn-reset">
+                    Clear
+                </button>
+
+                <button type="submit" class="btn-submit">
+                    Create Employee
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</form>
+
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Finance Dashboard</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="/css/manager.css">
+
+    <style>
+
+        /* ───── Finance Dashboard Extra Styling ───── */
+
+        .finance-wrapper {
+            padding: 32px;
+            max-width: 1300px;
+            margin: auto;
+        }
+
+        .finance-heading {
+            margin-bottom: 26px;
+        }
+
+        .finance-heading h1 {
+            font-size: 28px;
+            color: #1a3a47;
+            margin-bottom: 6px;
+        }
+
+        .finance-heading p {
+            color: #6b8fa0;
+            font-size: 14px;
+        }
+
+        /* ───── Chart Section ───── */
+
+        .analytics-card {
+            background: #fff;
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: 0 2px 12px rgba(48,185,227,0.08);
+            margin-top: 28px;
+        }
+
+        .analytics-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .analytics-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a3a47;
+        }
+
+        .analytics-sub {
+            font-size: 13px;
+            color: #6b8fa0;
+            margin-top: 4px;
+        }
+
+        .analytics-badge {
+            background: #e3f6fd;
+            color: #30b9e3;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 480px;
+        }
+
+        /* ───── Small Summary Table ───── */
+
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 28px;
+        }
+
+        .summary-table th {
+            background: #f7fbfd;
+            color: #6b8fa0;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 14px;
+            text-align: left;
+        }
+
+        .summary-table td {
+            padding: 16px 14px;
+            border-bottom: 1px solid #eef5f8;
+            font-size: 14px;
+            color: #2c3e50;
+        }
+
+        .summary-table tr:hover {
+            background: #f9fcfe;
+        }
+
+        .manager-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .manager-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #84d0f0 0%, #30b9e3 80%);
+            color: #fff;
+            font-size: 13px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .amount {
+            font-weight: 700;
+            color: #1a3a47;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+    <%- include('../partials/CFO_nav') %>
+
+<div class="finance-wrapper">
+
+    <!-- PAGE HEADER -->
+
+    <div class="finance-heading">
+
+        <h1>Finance Analytics Dashboard</h1>
+
+        <p>
+            Monitor finance manager-wise managers and employee spending and company team distribution
+        </p>
+
+    </div>
+
+
+
+    <!-- MAIN ANALYTICS CARD -->
+
+    <div class="analytics-card">
+
+        <div class="analytics-top">
+
+            <div>
+
+                <div class="analytics-title">
+                    finance manager-wise Team Expense
+                </div>
+
+                <div class="analytics-sub">
+                    Total approved expense under each finance-manager
+                </div>
+
+            </div>
+
+            <div class="analytics-badge">
+                Finance Overview
+            </div>
+
+        </div>
+
+        <!-- CHART -->
+
+        <div class="chart-container">
+            <canvas id="managerExpenseChart"></canvas>
+        </div>
+
+        <!-- SUMMARY TABLE -->
+
+        <table class="summary-table">
+
+            <thead>
+
+                <tr>
+                    <th>finance manager</th>
+                    <th>Total Approved Expense</th>
+                    <th>Total managers + employes</th>
+                </tr>
+
+            </thead>
+
+            <tbody id="managerTableBody">
+
+              
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+<script>  const finance_manager_data = <%- JSON.stringify(finance_manager_data) %>; </script>
+<!-- ───── CHART JS ───── -->
+<script src="/js/finance_manager_wise_expense.js"> </script>
+
+</body>
+</html>

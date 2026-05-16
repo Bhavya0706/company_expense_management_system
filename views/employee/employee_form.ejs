@@ -1,0 +1,124 @@
+<!-- views/employee/add-expense.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Expense</title>
+    <link rel="stylesheet" href="/css/employee.css">
+</head>
+
+<body>
+
+<!-- ── Navbar ── -->
+ 
+<%- include('../partials/employee_nav')  %>
+
+<!-- ── FORM PAGE ── -->
+ <form action="/employee/request" method="post">
+<div class="form-page">
+    <div class="form-card">
+
+        <div class="form-card-header">
+            <h2>Submit New Expense</h2>
+            <p>Fill in the details and attach your bill for reimbursement</p>
+        </div>
+
+        <div class="form-body">
+
+            <!-- Toast -->
+            <div class="toast" id="successToast">
+                ✅ Expense submitted successfully!
+            </div>
+
+            <div class="form-grid">
+
+                <!-- Title -->
+                <div class="form-group">
+                    <label>Expense Title</label>
+                    <input type="text" id="expTitle" placeholder="e.g. Client Dinner" name="exprence_title">
+                </div>
+
+                <!-- Date -->
+                <div class="form-group">
+                    <label>Date of Expense</label>
+                    <input type="date" id="expDate" name="date">
+                </div>
+
+                <!-- Category -->
+                <div class="form-group" >
+                    <label>Category</label>
+                    <select id="expCategory" name="category">
+                        <option value="">Select category</option>
+                        <option>Travel</option>
+                        <option>Food & Beverages</option>
+                        <option>Accommodation</option>
+                        <option>Office Supplies</option>
+                        <option>Client Entertainment</option>
+                        <option>Software / Subscription</option>
+                        <option>Miscellaneous</option>
+                    </select>
+                </div>
+
+                <!-- Amount -->
+                <div class="form-group">
+                    <label>Amount (₹)</label>
+                    <input type="number" id="expAmount" placeholder="0.00" name="ammount">
+                </div>
+
+                <!-- Payment -->
+                <div class="form-group" >
+                    <label>Payment Method</label>
+                    <select id="expPayment" name="payment_method">
+                        <option value="">Select method</option>
+                        <option>Cash</option>
+                        <option>Corporate Card</option>
+                        <option>Personal Card</option>
+                        <option>UPI</option>
+                        <option>Bank Transfer</option>
+                    </select>
+                </div>
+
+                <!-- Vendor -->
+                <div class="form-group">
+                    <label>Vendor / Merchant</label>
+                    <input type="text" id="expVendor" placeholder="e.g. Zomato" name="vender_name">
+                </div>
+
+                <!-- Reason -->
+                <div class="form-group full">
+                    <label>Reason / Description</label>
+                    <textarea id="expReason" placeholder="Describe the purpose..." name="Description"></textarea>
+                </div>
+
+                <!-- File Upload -->
+                <div class="form-group full">
+                    <label>Attach Bill / Receipt</label>
+
+                    <div class="drop-zone" id="dropZone">
+                        <input type="file" id="billFile" accept="image/*,.pdf" onchange="handleFile(this)" name="bill">
+                        
+                        <div class="drop-icon">📎</div>
+                        <p><strong>Click to upload</strong> or drag & drop</p>
+                        <p>PNG, JPG, PDF up to 5MB</p>
+
+                        <div class="drop-preview" id="filePreview"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Buttons -->
+            <div class="submit-row">
+                <button class="btn-reset" onclick="resetForm()">Clear</button>
+                <button class="btn-submit" type="submit">Submit Expense</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+</form>
+<!-- JS -->
+<script src="/js/employe_form.js"></script>
+
+</body>
+</html>

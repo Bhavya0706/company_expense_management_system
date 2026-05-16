@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Login</title>
+    <link rel="stylesheet" href="/css/allover.css">
+</head>
+<body>
+    <div class="container page active" id="loginPage">
+        <div class="header">
+            <h1 style="color: black;">Welcome Back</h1>
+            <p style="color: black;">Sign in to your account</p>
+        </div>
+
+        <div class="form-container">
+            <form id="loginForm" action="/auth/login" method="post">
+                <div class="form-group">
+                   
+
+                    <div style="background-color: rgba(255, 0, 0, 0.174); padding-left: 5px;">
+                        <ul id="message" class="pass" style="color: red; list-style-position: inside;"> <% if(msg){  %>
+            <li> <%= msg  %> </li>
+              
+            <% }  %></ul> </div>
+
+                    <!-- <input type="email" id="loginEmail" placeholder="Enter your email" required> -->
+                     <select id="select_self" name="role">
+                        <option value=""> Select Role </option>
+                        <option value="employee">employe</option>
+                        <option value="finance_manager">finance manager</option>
+                        <option value="manager">manager</option>
+                        <option value="chief_financial_officer">chief_financial_officer</option>
+                     </select>
+                </div>
+                <div class="form-group">
+                    <label for="loginEmail">Email Address</label>
+                    <input type="email" id="loginEmail" placeholder="Enter your email" name="email" value="<%= oldinput.email  %>" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password" name="password" required>
+                </div>
+                <button type="submit"   class="Signin">login</button>
+            </form>
+
+            <div class="divider">
+                <span>OR</span>
+            </div>
+            <div class="register-link">
+                <a href="/auth/signup" id="registration">Want to register company?</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
