@@ -9,7 +9,7 @@ const users = require('../models/users')
 
 exports.dashboard = async(req,res,next) =>{
 
-  const finance_manager_id = '6a087c058f9a74906f0f9e94';
+  const finance_manager_id = req.session.USER.id;
   const managers = await users.find({finance_manager : finance_manager_id ,   role: "manager"});
   const managerIds =  managers.map(m => m._id);
 
@@ -27,7 +27,7 @@ exports.dashboard = async(req,res,next) =>{
 
 exports.manager_wise = async(req,res,next) =>{
 
-  const finance_manager_id = '6a087c058f9a74906f0f9e94';
+  const finance_manager_id = req.session.USER.id;
 
   const managers = await users.find({finance_manager : finance_manager_id ,   role: "manager"});
 
@@ -121,7 +121,7 @@ exports.manager_wise = async(req,res,next) =>{
 exports.manager_aggregate = async (req,res,next) =>{
 
 
-     const finance_manager_id = '6a087c058f9a74906f0f9e94';
+     const finance_manager_id = req.session.USER.id;
     
         const expenses = await manager_expense.find({finance_manager : finance_manager_id}).populate('manager');
     
@@ -138,7 +138,7 @@ exports.manager_requests = (req,res,next) =>{
 }
 
 exports.getRequestsAPI = async (req, res) => {
-    const finance_manager_id = "6a087c058f9a74906f0f9e94";
+    const finance_manager_id = req.session.USER.id;
 
     const status = req.query.status;
   
@@ -196,7 +196,7 @@ exports.getRequestsAPI = async (req, res) => {
 
  exports.employe_aggregate = async (req,res,next) =>{
 
- const finance_manager_id = '6a087c058f9a74906f0f9e94';
+ const finance_manager_id = req.session.USER.id;
 
  const managers = await users.find({ finance_manager : finance_manager_id ,   role: "manager"});
 
@@ -223,8 +223,8 @@ exports.getRequestsAPI = async (req, res) => {
     email: email,
     phone: phone,
     role: 'manager',
-    finance_manager : '6a087c058f9a74906f0f9e94',
-     companyid: '69ff99999999999999999999',
+    finance_manager : req.session.USER.id,
+     companyid: req.session.USER.companyid,
     password: 'bhavya' // it will generate randomly in real use and directly send to employee ans hashed passwprd save in database;
 
    });
@@ -235,8 +235,8 @@ exports.getRequestsAPI = async (req, res) => {
  }
 
  exports.manager_list = async(req,res,next) =>{
-const finance_manager_id = '6a087c058f9a74906f0f9e94';
-const company_id = '69ff99999999999999999999';
+const finance_manager_id = req.session.USER.companyid;
+const company_id = req.session.USER.companyid;
   const expenses = await manager_expense.find({finance_manager : finance_manager_id}).populate('manager');
   const managers = await users.find({finance_manager : finance_manager_id});
   const employes = await users.find({ role : 'employee' , companyid : company_id });

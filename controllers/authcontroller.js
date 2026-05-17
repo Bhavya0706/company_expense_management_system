@@ -31,7 +31,8 @@ if(!USER){
    req.session.USER = {
     id : USER._id,
     role : USER.role,
-    email : USER.email
+    email : USER.email,
+    companyid : USER.companyid
    }
 
    if(USER.role == 'chief_financial_officer'){
@@ -291,8 +292,18 @@ module.exports.allowroles = (role) => {
             return res.redirect('/auth/login');
         };
         if(!role.includes(req.session.USER.role)){
-            return res.status(403).send("Access Denied");
+      return res.status(403).send("Access Denied");
         }
         next();
     }
+}
+
+exports.logout = (req,res,next) =>{
+    req.session.destroy((err) =>{
+        if(err){
+             return next(err);
+        }
+        res.clearCookie('connect.sid');
+        res.redirect('/');
+    })
 }

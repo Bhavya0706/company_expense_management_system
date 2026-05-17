@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile</title>
+
+<link rel="stylesheet" href="/css/employee.css">
+<link rel="stylesheet" href="/css/profile.css">
+<style>
+.profile-wrapper{
+    background: white;
+    border-radius: 18px;
+    padding: 30px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+}
+
+.profile-header{
+    display: flex;
+    align-items: flex-start;
+    gap: 40px;
+}
+
+.profile-image-section{
+    min-width: 250px;
+    text-align: center;
+}
+
+.profile-image{
+    width: 170px;
+    height: 170px;
+    margin: auto;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 6px solid #2563eb;
+    box-shadow: 0 4px 15px rgba(37,99,235,0.25);
+}
+
+.profile-image img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-image-section h2{
+    margin-top: 18px;
+    font-size: 28px;
+    color: #1e293b;
+}
+
+.profile-image-section p{
+    color: #64748b;
+    margin-top: 5px;
+    text-transform: capitalize;
+}
+.profile-info{
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 100%;
+}
+
+.info-card{
+    background: #f8fafc;
+    border-radius: 14px;
+    padding: 22px;
+    border: 1px solid #e2e8f0;
+}
+
+.info-card span{
+    font-size: 14px;
+    color: #64748b;
+}
+
+.info-card h3{
+    margin-top: 10px;
+    color: #0f172a;
+    word-break: break-word;
+}
+
+.profile-actions{
+    margin-top: 35px;
+    display: flex;
+    gap: 16px;
+}
+
+.back-btn,
+.logout-btn{
+    padding: 12px 24px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+.back-btn{
+    background: #2563eb;
+    color: white;
+}
+
+.logout-btn{
+    background: #ef4444;
+    color: white;
+}
+
+.back-btn:hover,
+.logout-btn:hover{
+    transform: translateY(-2px);
+}
+
+@media(max-width:768px){
+
+    .profile-header{
+        flex-direction: column;
+    }
+
+    .profile-actions{
+        flex-direction: column;
+    }
+
+}
+</style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-brand">Fund<span>Flow</span></div>
+
+        </div>
+    </nav>
+
+<div class="dashboard">
+
+    <div class="profile-wrapper">
+
+        <div class="profile-header">
+
+            <div class="profile-image-section">
+
+                <div class="profile-image">
+                    <img
+                        src="https://ui-avatars.com/api/?name=<%= user.name %>&background=2563eb&color=fff&size=200"
+                        alt="Profile"
+                    >
+                </div>
+
+                <h2><%= user.name %></h2>
+                <p><%= user.role %></p>
+
+            </div>
+
+            <div class="profile-info">
+                <div class="info-card">
+                    <span>Company Name</span>
+                    <h3><%= user.companyid%></h3>
+                </div>
+
+                <div class="info-card">
+                    <span>Email</span>
+                    <h3><%= user.email %></h3>
+                </div>
+
+                <div class="info-card">
+                    <span>Phone</span>
+                    <h3><%= user.phone || 'Not Added' %></h3>
+                </div>
+
+              
+
+                <div class="info-card">
+                    <span>Role</span>
+                    <h3><%= user.role %></h3>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="profile-actions">
+
+            <a href="/dashboard" class="back-btn">
+                Back To Dashboard
+            </a>
+
+            <a href="/logout" class="logout-btn">
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="/js/first_general.js"></script>
+</body>
+</html>
+
+
+

@@ -3,7 +3,7 @@ const employee_expense = require('../models/employee_expense');
 const users = require('../models/users');
 exports.getdashboard = async (req,res,next) =>{
 
- const userid = "6a087ce9341ee9bf33d854de";
+ const userid = req.session.USER.id;
  const expenses = await manager_expenses.find({manager : userid});
 
     res.render('manager/manager_dashboard.ejs', {expenses, page : 'dashboard' });
@@ -21,6 +21,10 @@ exports.getmanagerrequest = (req,res,next) =>{
 exports.postmanagerrequest = async (req,res,next) =>{
    
 try {
+
+  const manager = await users.findById(req.session.USER.id);
+  const finance_manager_id = manager.finance_manager;
+
     const expense = new manager_expenses({
         title: req.body.exprence_title,
         amount: req.body.ammount,
@@ -30,9 +34,9 @@ try {
         description: req.body.Description,
         date: req.body.date,
     
-        manager: "6a087ce9341ee9bf33d854de",
-        finance_manager: '6a087c058f9a74906f0f9e94'  ,
-         companyid : '69ff99999999999999999999'  });
+        manager: req.session.USER.id,
+        finance_manager: finance_manager_id,
+         companyid : req.session.USER.companyid  });
 
     await expense.save();
 
@@ -50,7 +54,7 @@ exports.employee_requets = (req,res,next) =>{
 
 
 exports.getRequestsAPI = async (req, res) => {
-    const managerId = "6a087ce9341ee9bf33d854de";
+    const managerId = req.session.USER.id;
 
     const status = req.query.status;
   
@@ -98,7 +102,7 @@ exports.getRequestsAPI = async (req, res) => {
   };
 
   exports.employee_aggregate = async(req,res,next) =>{
-    const managerid = '6a087ce9341ee9bf33d854de';
+    const managerid = req.session.USER.id;
 
     const expenses = await employee_expense.find({manager : managerid}).populate('employee');
 
@@ -124,8 +128,8 @@ exports.getRequestsAPI = async (req, res) => {
     email: email,
     phone: phone,
     role: 'employee',
-    manager: '6a087ce9341ee9bf33d854de',
-    companyid : '69ff99999999999999999999',
+    manager: req.session.USER.id,
+    companyid : req.session.USER.companyid,
     password: 'bhavya' // it will generate randomly in real use and directly send to employee ans hashed passwprd save in database;
 
    });
@@ -138,7 +142,7 @@ exports.getRequestsAPI = async (req, res) => {
   }
   
   exports.employe_list = async (req,res,next) =>{
-    managerid = '6a087ce9341ee9bf33d854de';
+    managerid = req.session.USER.id;
 
     const employee =  await users.find({manager : managerid}).populate('manager');
     const expenses = await employee_expense.find({manager : managerid}).populate('employee');

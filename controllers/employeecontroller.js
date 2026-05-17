@@ -1,8 +1,9 @@
 const employee_Expense = require("../models/employee_expense");
+const users = require("../models/users");
 
 exports.getdashboard = async (req,res,next) =>{
 
- const userid = "6a080ab915db5176530330e5";
+ const userid = req.session.USER.id;
  const expenses = await employee_Expense.find({employee : userid});
 
     res.render('employee/employee_dashboard.ejs', {expenses , page : 'dashboard'});
@@ -20,6 +21,9 @@ exports.getemployeerequesst = (req,res,next) =>{
 exports.postemployeerequesst = async (req,res,next) =>{
   
 try {
+  const employe = await users.findById(req.session.USER.id);
+  const managerid = employe.manager;
+
     const expense = new employee_Expense({
         title: req.body.exprence_title,
         amount: req.body.ammount,
@@ -29,9 +33,9 @@ try {
         description: req.body.Description,
         date: req.body.date,
     
-        employee: "6a080ab915db5176530330e5" ,
-        manager: "6a087ce9341ee9bf33d854de",
-       companyid : '69ff99999999999999999999'
+        employee: req.session.USER.id ,
+        manager: managerid,
+       companyid : req.session.USER.companyid
     });
 
     await expense.save();

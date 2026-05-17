@@ -9,7 +9,7 @@ const users = require('../models/users')
 
 exports.dashboard = async(req,res,next) =>{
 
-    const companyid = '69ff99999999999999999999';
+    const companyid = req.session.USER.companyid;
 
   const employee_expenses = await employee_expense.find({companyid : companyid}).populate('employee').populate('manager');
   const manager_expenses = await manager_expense.find({companyid : companyid}).populate('manager').populate('finance_manager');
@@ -24,7 +24,7 @@ exports.dashboard = async(req,res,next) =>{
 }
 
 exports.financemanager_wise = async(req,res,next) =>{
-    const companyid =  '69ff99999999999999999999';
+    const companyid =  req.session.USER.companyid;
   
 
         // STEP 1
@@ -164,8 +164,8 @@ exports.post_create_finance_manager = async(req,res,next) =>{
         email: email,
         phone: phone,
         role: 'finance_manager',
-        CFO: '69ff99999999999999999998',
-        companyid : '69ff99999999999999999999',
+        CFO: req.session.USER.id,
+        companyid : req.session.USER.companyid,
         password: 'bhavya' // it will generate randomly in real use and directly send to employee ans hashed passwprd save in database;
     
     })
@@ -181,14 +181,14 @@ res.redirect('/CFO/finance_manager_list');
 exports.manager_aggregate = async (req,res,next) =>{
 
 
-     const company_id = '69ff99999999999999999999';
+     const company_id = req.session.USER.companyid;
         const expenses = await manager_expense.find({companyid : company_id}).populate('manager').populate('finance_manager');
     res.render('CFO/manager_aggregate.ejs' , {page : 'manager_aggregate',expenses});
 
 }
 
  exports.employe_aggregate = async (req,res,next) =>{
-    const company_id = '69ff99999999999999999999';
+    const company_id = req.session.USER.companyid;
   const expenses = await employee_expense.find({companyid : company_id}).populate('employee').populate('manager');
  
 
@@ -200,7 +200,7 @@ exports.manager_aggregate = async (req,res,next) =>{
 
 
 exports.finance_manager_list = async(req,res,next) =>{
-    const company_id = '69ff99999999999999999999';
+    const company_id = req.session.USER.companyid;
 
     const finance_managers = await users.find({role : 'finance_manager' , companyid : company_id});
     const managers = await users.find({role : 'manager', companyid : company_id});
@@ -267,19 +267,20 @@ exports.finance_manager_list = async(req,res,next) =>{
 exports.delete_finance_manager = async(req,res,next) =>{
 
 
-const company_id = '69ff99999999999999999999';
+const company_id = req.session.USER.companyid;
 const finance_manager_id = req.params.id;
 try{
+
+    const managers = await users.find({companyid : company_id , role : 'manager',finance_manager : finance_manager_id});
+    const manager_ids = managers.map(m => m._id);
+
     await users.findByIdAndDelete(finance_manager_id);
     await users.deleteMany({finance_manager : finance_manager_id , role : 'manager'});
     await manager_expense.deleteMany({finance_manager : finance_manager_id});
-    
-    const managers = await users.find({companyid : company_id , role : 'manager'});
-    
-    const manager_ids = managers.map(m => m._id);
-    
     await users.deleteMany({    manager : {$in :  manager_ids} , role: 'employee'});
     await employee_expense.deleteMany({ manager : {$in :  manager_ids}});
+
+    
     res.json({
         success : true
     })

@@ -40,7 +40,8 @@ const userSchema = new mongoose.Schema({
     default: null
   },
   companyid: {
-    type: mongoose.Schema.Types.ObjectId
+    type: mongoose.Schema.Types.ObjectId,
+    ref : 'companies'
  }
 
 }, { timestamps: true });
