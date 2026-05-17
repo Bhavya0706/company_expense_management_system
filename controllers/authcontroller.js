@@ -14,8 +14,8 @@ exports.login = (req,res,next) =>{
 exports.postlogin = async (req,res,next) =>{
     const {role,email,password} = req.body;
    
- const user = await users.findOne({role : role , email : email})
-if(!user){
+ const USER = await users.findOne({role : role , email : email})
+if(!USER){
    return res.status(422).render('auth/login.ejs', {msg : 'user does not exist' , oldinput : {email}});
 }
 
@@ -23,12 +23,32 @@ if(!user){
 //    const ismatch =
 //    await bcrypt.compare( password,user.password);
 
-   if(password != user.password){
+   if(password != USER.password){
     return res.status(422).render('auth/login.ejs', {msg : 'incorrect password', oldinput : {email}});
    }
 
-    res.redirect('/CFO/dashboard'); // will handle latter 
+   req.session.isloggedin = true;
+   req.session.USER = {
+    id : USER._id,
+    role : USER.role,
+    email : USER.email
+   }
+
+   if(USER.role == 'chief_financial_officer'){
+   return  res.redirect('/CFO/dashboard'); 
+   }
+   if(USER.role == 'finance_manager'){
+    return res.redirect('/finance_manager/dashboard');
+   }
+   if(USER.role == 'manager'){
+    return res.redirect('/manager/dashboard');
+   }
+   if(USER.role == 'employee'){
+    return res.redirect('/employee/dashboard');
+   }
+
 }
+
 
 
 exports.signup = 
@@ -255,4 +275,24 @@ exports.postsignup = [
 
 exports.home = (req,res,next) =>{
     res.render('home.ejs');
+}
+
+
+module.exports.isauth = (req,res,next) =>{
+    if(!req.session.isloggedin){
+        return res.redirect('/auth/login');
+    }
+    next();
+}
+
+module.exports.allowroles = (role) => {
+    return (req,res,next) =>{
+        if(!req.session.isloggedin){
+            return res.redirect('/auth/login');
+        };
+        if(!role.includes(req.session.USER.role)){
+            return res.status(403).send("Access Denied");
+        }
+        next();
+    }
 }

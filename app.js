@@ -4,8 +4,10 @@ const parser = require("body-parser");
 const path = require('path');
 const rootdir = require('./utils/pathutils')
 const { default: mongoose } = require('mongoose');
+const session = require('express-session');
 app.set('view engine' , 'ejs');
 app.set('views', path.join(rootdir, 'views'));
+
 
 const authrouter = require('./routes/authrouter');
 const employeerouter = require('./routes/employeerouter');
@@ -13,9 +15,15 @@ const managerrouter = require('./routes/managerrouter');
 const finance_manager_router = require('./routes/finance_manager_router');
 const CFOrouter = require('./routes/CFOrouter');
 
+
 app.use(express.static(path.join(rootdir , 'public')));
 app.use(express.json());
 
+app.use(session ({
+    secret : 'bhavya suthar',
+    resave : false,
+    saveUninitialized : false
+}))
 
 app.use(parser.urlencoded());
 

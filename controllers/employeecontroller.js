@@ -30,7 +30,7 @@ try {
         date: req.body.date,
     
         employee: "6a080ab915db5176530330e5" ,
-        manager: "6a0808ec745e766b5a5459ba",
+        manager: "6a087ce9341ee9bf33d854de",
        companyid : '69ff99999999999999999999'
     });
 

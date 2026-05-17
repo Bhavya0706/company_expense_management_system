@@ -3,7 +3,7 @@ const employee_expense = require('../models/employee_expense');
 const users = require('../models/users');
 exports.getdashboard = async (req,res,next) =>{
 
- const userid = "6a0808ec745e766b5a5459ba";
+ const userid = "6a087ce9341ee9bf33d854de";
  const expenses = await manager_expenses.find({manager : userid});
 
     res.render('manager/manager_dashboard.ejs', {expenses, page : 'dashboard' });
@@ -30,8 +30,8 @@ try {
         description: req.body.Description,
         date: req.body.date,
     
-        manager: "6a0808ec745e766b5a5459ba",
-        finance_manager: '6a07f93ac18a9beff4286bf1'  ,
+        manager: "6a087ce9341ee9bf33d854de",
+        finance_manager: '6a087c058f9a74906f0f9e94'  ,
          companyid : '69ff99999999999999999999'  });
 
     await expense.save();
@@ -50,7 +50,7 @@ exports.employee_requets = (req,res,next) =>{
 
 
 exports.getRequestsAPI = async (req, res) => {
-    const managerId = "6a0808ec745e766b5a5459ba";
+    const managerId = "6a087ce9341ee9bf33d854de";
 
     const status = req.query.status;
   
@@ -98,7 +98,7 @@ exports.getRequestsAPI = async (req, res) => {
   };
 
   exports.employee_aggregate = async(req,res,next) =>{
-    const managerid = '6a0808ec745e766b5a5459ba';
+    const managerid = '6a087ce9341ee9bf33d854de';
 
     const expenses = await employee_expense.find({manager : managerid}).populate('employee');
 
@@ -124,7 +124,7 @@ exports.getRequestsAPI = async (req, res) => {
     email: email,
     phone: phone,
     role: 'employee',
-    manager: '6a0808ec745e766b5a5459ba',
+    manager: '6a087ce9341ee9bf33d854de',
     companyid : '69ff99999999999999999999',
     password: 'bhavya' // it will generate randomly in real use and directly send to employee ans hashed passwprd save in database;
 
@@ -138,7 +138,7 @@ exports.getRequestsAPI = async (req, res) => {
   }
   
   exports.employe_list = async (req,res,next) =>{
-    managerid = '6a0808ec745e766b5a5459ba';
+    managerid = '6a087ce9341ee9bf33d854de';
 
     const employee =  await users.find({manager : managerid}).populate('manager');
     const expenses = await employee_expense.find({manager : managerid}).populate('employee');
