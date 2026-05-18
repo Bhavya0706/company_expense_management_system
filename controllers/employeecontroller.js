@@ -4,7 +4,7 @@ const users = require("../models/users");
 exports.getdashboard = async (req,res,next) =>{
 
  const userid = req.session.USER.id;
- const expenses = await employee_Expense.find({employee : userid});
+ const expenses = await employee_Expense.find({employee : userid}).sort({createdAt : -1});
 
     res.render('employee/employee_dashboard.ejs', {expenses , page : 'dashboard'});
 }

@@ -24,10 +24,10 @@ allexpenses.forEach(exp => {
 });
 let total = approvedTotal + pendingTotal + rejectedTotal;
 
-document.getElementById('total').textContent = total;
-document.getElementById('approved').textContent = approvedTotal;
-document.getElementById('pending').textContent = pendingTotal;
-document.getElementById('rejected').textContent = rejectedTotal;
+document.getElementById('total').textContent = total.toLocaleString('en-IN');
+document.getElementById('approved').textContent = approvedTotal.toLocaleString('en-IN');
+document.getElementById('pending').textContent = pendingTotal.toLocaleString('en-IN');
+document.getElementById('rejected').textContent = rejectedTotal.toLocaleString('en-IN');
 
 
 

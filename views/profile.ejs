@@ -23,8 +23,9 @@
 }
 
 .profile-image-section{
-    min-width: 250px;
+    width: 280px;
     text-align: center;
+    flex-shrink: 0;
 }
 
 .profile-image{
@@ -60,7 +61,11 @@
     gap: 18px;
     width: 100%;
 }
-
+.profile-image-section h2,
+.profile-image-section p{
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
 .info-card{
     background: #f8fafc;
     border-radius: 14px;
@@ -145,16 +150,13 @@
                     >
                 </div>
 
-                <h2><%= user.name %></h2>
+                <h2 style="text-wrap: wrap;"><%= user.name %></h2>
                 <p><%= user.role %></p>
 
             </div>
 
             <div class="profile-info">
-                <div class="info-card">
-                    <span>Company Name</span>
-                    <h3><%= user.companyid%></h3>
-                </div>
+              
 
                 <div class="info-card">
                     <span>Email</span>

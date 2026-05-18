@@ -35,18 +35,26 @@ if(!USER){
     companyid : USER.companyid
    }
 
-   if(USER.role == 'chief_financial_officer'){
-   return  res.redirect('/CFO/dashboard'); 
-   }
-   if(USER.role == 'finance_manager'){
-    return res.redirect('/finance_manager/dashboard');
-   }
-   if(USER.role == 'manager'){
-    return res.redirect('/manager/dashboard');
-   }
-   if(USER.role == 'employee'){
-    return res.redirect('/employee/dashboard');
-   }
+   req.session.save(err =>{
+    if(err){
+        console.log(err);
+    }
+
+    if(USER.role == 'chief_financial_officer'){
+    return  res.redirect('/CFO/dashboard'); 
+    }
+    if(USER.role == 'finance_manager'){
+     return res.redirect('/finance_manager/dashboard');
+    }
+    if(USER.role == 'manager'){
+     return res.redirect('/manager/dashboard');
+    }
+    if(USER.role == 'employee'){
+     return res.redirect('/employee/dashboard');
+    }
+
+   })
+
 
 }
 
@@ -130,12 +138,6 @@ exports.postsignup = [
 
     .withMessage(
         'Username must contain minimum 3 letters'
-    )
-
-    .matches(/^[a-zA-Z\s]+$/)
-
-    .withMessage(
-        'Username can contain only letters'
     ),
 
 

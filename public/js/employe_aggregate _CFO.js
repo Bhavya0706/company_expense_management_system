@@ -24,10 +24,10 @@ history.forEach(ele =>{
 })
 
 
-document.getElementById('total').textContent = total;
-document.getElementById('pendigamount').textContent = pendigamount;
-document.getElementById('approvedamount').textContent = approvedamount;
-document.getElementById('rejectedamount').textContent = rejectedamount;
+document.getElementById('total').textContent = total.toLocaleString('en-IN');
+document.getElementById('pendigamount').textContent = pendigamount.toLocaleString('en-IN');
+document.getElementById('approvedamount').textContent = approvedamount.toLocaleString('en-IN');
+document.getElementById('rejectedamount').textContent = rejectedamount.toLocaleString('en-IN');
 
 
 

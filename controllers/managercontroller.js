@@ -4,7 +4,7 @@ const users = require('../models/users');
 exports.getdashboard = async (req,res,next) =>{
 
  const userid = req.session.USER.id;
- const expenses = await manager_expenses.find({manager : userid});
+ const expenses = await manager_expenses.find({manager : userid}).sort({createdAt : -1});
 
     res.render('manager/manager_dashboard.ejs', {expenses, page : 'dashboard' });
 }
@@ -66,8 +66,9 @@ exports.getRequestsAPI = async (req, res) => {
     }
   
     const expenses = await employee_expense
-      .find(filter)
+      .find(filter).sort({createdAt : -1})
       .populate('employee');
+
 
       res.json(expenses);
   };     
@@ -104,7 +105,7 @@ exports.getRequestsAPI = async (req, res) => {
   exports.employee_aggregate = async(req,res,next) =>{
     const managerid = req.session.USER.id;
 
-    const expenses = await employee_expense.find({manager : managerid}).populate('employee');
+    const expenses = await employee_expense.find({manager : managerid}).populate('employee').sort({createdAt : -1});
 
 
 

@@ -150,7 +150,7 @@ exports.getRequestsAPI = async (req, res) => {
     }
   
     const expenses = await manager_expense
-      .find(filter)
+      .find(filter).sort({createdAt : -1})
       .populate('manager');
 
       res.json(expenses);
@@ -235,7 +235,7 @@ exports.getRequestsAPI = async (req, res) => {
  }
 
  exports.manager_list = async(req,res,next) =>{
-const finance_manager_id = req.session.USER.companyid;
+const finance_manager_id = req.session.USER.id;
 const company_id = req.session.USER.companyid;
   const expenses = await manager_expense.find({finance_manager : finance_manager_id}).populate('manager');
   const managers = await users.find({finance_manager : finance_manager_id});
