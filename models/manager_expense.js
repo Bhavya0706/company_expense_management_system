@@ -56,6 +56,9 @@ const expenseSchema = new mongoose.Schema({
     companyid: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "companies"
+     },
+     billname : {
+        type : String
      }
 
 }, { timestamps: true });
