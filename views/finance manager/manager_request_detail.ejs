@@ -122,6 +122,29 @@
     <p>Payment Method: <span><%= expense.paymentMethod %></span></p>
     <p>Vendor: <span><%= expense.vendor %></span></p>
     <p>Description: <span><%= expense.description %></span></p>
+    <div class="invoice-preview">
+      <h3>Invoice / Receipt</h3>
+    
+      <% if(expense.billname) { %>
+    
+        <img 
+          src="/uploads/<%= expense.billname%>" 
+          alt="Invoice"
+          style="
+            width:100%;
+            max-width:500px;
+            border-radius:10px;
+            margin-top:10px;
+            border:1px solid #ccc;
+          "
+        >
+    
+      <% } else { %>
+    
+        <p>No invoice uploaded</p>
+    
+      <% } %>
+    </div>
     <button class="btn-accept" onclick="changestatus('approved')" >approve</button>
     <button class="btn-reject" onclick="changestatus('rejected')">reject</button>
   </div>

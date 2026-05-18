@@ -23,6 +23,7 @@ exports.postemployeerequesst = async (req,res,next) =>{
 try {
   const employe = await users.findById(req.session.USER.id);
   const managerid = employe.manager;
+ const filename = req.file.filename;
 
     const expense = new employee_Expense({
         title: req.body.exprence_title,
@@ -35,7 +36,8 @@ try {
     
         employee: req.session.USER.id ,
         manager: managerid,
-       companyid : req.session.USER.companyid
+       companyid : req.session.USER.companyid,
+       billname : filename,
     });
 
     await expense.save();

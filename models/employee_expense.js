@@ -53,6 +53,9 @@ const expenseSchema = new mongoose.Schema({
     },
     companyid: {
         type: mongoose.Schema.Types.ObjectId
+     }, 
+     billname : {
+        type : String
      }
     
 
