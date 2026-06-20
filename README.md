@@ -70,10 +70,12 @@ cd expense-management
 ```bash
 npm install
 ```
+
 ## Set env variable
 
-```bash
+```env
 MONGO_URI=your_mongodb_connection_string
+
 ```
 ## Start Server
 
