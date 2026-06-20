@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const parser = require("body-parser");
 const path = require('path');
-
+require("dotenv").config();
 const { default: mongoose } = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo').default;
@@ -12,7 +12,7 @@ const rootdir = require('./utils/pathutils');
 app.set('views', path.join(rootdir, 'views'));
 app.set('view engine' , 'ejs');
 
-const db_path = "mongodb+srv://bhavya:bh%40vy%40@bhavya.g1kwbuj.mongodb.net/expense_management?appName=bhavya";
+const db_path = process.env.MONGO_URI;
 
 const authrouter = require('./routes/authrouter');
 const employeerouter = require('./routes/employeerouter');
