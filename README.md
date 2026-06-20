@@ -341,7 +341,7 @@ cd company_expense_management_system
 npm install
 ```
 
-### 4. add `.env` variables
+### 4. Create `.env` File
 
 Create a file named `.env` in the project root.
 
@@ -349,11 +349,6 @@ Create a file named `.env` in the project root.
 MONGO_URI=your_mongodb_connection_string
 ```
 
-Example:
-
-```env
-MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/company_expense_management
-```
 
 ### 5. Start the Server
 
